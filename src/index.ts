@@ -23,7 +23,7 @@ const search = (q: string, options?: Options): CountryData[] | undefined => {
           'translations.common',
           'capital',
         ],
-        threshold: 0.2,
+        threshold: 0.1,
         shouldSort: true,
         useExtendedSearch: true,
         minMatchCharLength: 3,
