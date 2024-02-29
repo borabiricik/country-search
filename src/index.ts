@@ -1,17 +1,18 @@
 import Fuse from 'fuse.js';
 import { mergeCountries } from '../utils/mergeCountries';
 import { ConvertedCountry, CountryData } from './types';
+import { Options } from './types/options';
 
 const getAll = (): ConvertedCountry[] => {
   const mergedCountries = mergeCountries();
   return mergedCountries;
 };
 
-const search = (q: string): CountryData[] | undefined => {
+const search = (q: string, options?: Options): CountryData[] | undefined => {
   try {
     if (!q) throw new Error('No query provided');
     else {
-      const mergedCountries = mergeCountries();
+      const mergedCountries = mergeCountries(options);
       const fuse = new Fuse(mergedCountries, {
         keys: [
           'name.common',

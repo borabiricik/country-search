@@ -1,11 +1,9 @@
-import { getAll } from '../src';
+import { getAll, search } from '../src';
 
 describe('index', () => {
-  describe('myPackage', () => {
+  describe('search', () => {
     it('should return a string containing the message', () => {
-      const message = 'Hello';
-
-      const result = getAll();
+      const result = search('Turkey', { countryCCA3s: ['TUR'] });
 
       expect(result).toBeDefined();
     });
