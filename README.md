@@ -11,7 +11,7 @@
 
 ## Getting Started
 
-This is an example docs showing how you can search along countries with a _single keyword_ !
+This is an example docs showing how you can search along countries with a **single keyword** !
 
 ### Installation
 
