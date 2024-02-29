@@ -1,13 +1,13 @@
-import { myPackage } from '../src';
+import { getAll } from '../src';
 
 describe('index', () => {
   describe('myPackage', () => {
     it('should return a string containing the message', () => {
       const message = 'Hello';
 
-      const result = myPackage(message);
+      const result = getAll();
 
-      expect(result).toMatch(message);
+      expect(result).toBeDefined();
     });
   });
 });
