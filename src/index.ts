@@ -29,9 +29,11 @@ const search = (q: string, options?: Options): CountryData[] | undefined => {
         minMatchCharLength: 3,
       });
 
-      const result = fuse.search(q, { limit: 5 }).map(({ item }) => {
-        return item && { name: item.name.common, cca3: item.cca3 };
-      });
+      const result = fuse
+        .search(q, { limit: options?.limit || 5 })
+        .map(({ item }) => {
+          return item && { name: item.name.common, cca3: item.cca3 };
+        });
       return result;
     }
   } catch (error) {

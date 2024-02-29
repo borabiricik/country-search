@@ -1,6 +1,7 @@
 export interface Options {
   countryCCA3s?: string[];
   keys?: SearchKeys[];
+  limit?: number;
 }
 
 type SearchKeys =
