@@ -17,5 +17,12 @@ describe('index', () => {
 
       expect(result?.[0]).toEqual({ name: 'Turkey', cca3: 'TUR' });
     });
+    it('should search with custom keys', () => {
+      const result = search('uni', {
+        keys: ['name.common', 'name.official'],
+      });
+      console.log({ result });
+      expect(result?.[0].name).toContain('United');
+    });
   });
 });

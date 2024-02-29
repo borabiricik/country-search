@@ -14,7 +14,7 @@ const search = (q: string, options?: Options): CountryData[] | undefined => {
     else {
       const mergedCountries = mergeCountries(options);
       const fuse = new Fuse(mergedCountries, {
-        keys: [
+        keys: options?.keys || [
           'name.common',
           'name.official',
           'altSpellings',
