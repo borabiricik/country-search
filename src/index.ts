@@ -18,19 +18,19 @@ const search = (q: string, options?: Options): CountryData[] | undefined => {
           'name.common',
           'name.official',
           'altSpellings',
-          'cities',
+          // 'cities',
           'translations.official',
           'translations.common',
-          'capital',
+          // 'capital',
         ],
-        threshold: 0.1,
+        threshold: 0.2,
         shouldSort: true,
         useExtendedSearch: true,
         minMatchCharLength: 3,
       });
 
       const result = fuse
-        .search(q, { limit: options?.limit || 5 })
+        .search(q.replace(' ', ''), { limit: options?.limit || 5 })
         .map(({ item }) => {
           return item && { name: item.name.common, cca3: item.cca3 };
         });

@@ -21,8 +21,27 @@ describe('index', () => {
       const result = search('uni', {
         keys: ['name.common', 'name.official'],
       });
-      console.log({ result });
       expect(result?.[0].name).toContain('United');
+    });
+    it('should find usa', () => {
+      const result = search('united st', {
+        keys: ['name.common', 'name.official'],
+      });
+      console.log({ result });
+      expect(result?.[0]).toEqual({ name: 'United States', cca3: 'USA' });
+    });
+
+    it('should find cyprus', () => {
+      const result = search('cyprus', {
+        keys: [
+          'name.common',
+          'name.official',
+          'altSpellings',
+          'capital',
+          'cities',
+        ],
+      });
+      expect(result?.[0]).toEqual({ name: 'Cyprus', cca3: 'CYP' });
     });
   });
 });
