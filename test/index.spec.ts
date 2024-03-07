@@ -1,4 +1,4 @@
-import { getAll, search } from '../src';
+import { search } from '../src';
 
 describe('index', () => {
   describe('search', () => {
@@ -41,6 +41,21 @@ describe('index', () => {
           'cities',
         ],
       });
+      expect(result?.[0]).toEqual({ name: 'Cyprus', cca3: 'CYP' });
+    });
+    it('should find cyprus', () => {
+      const result = search('kıbrıs', {
+        keys: [
+          'translations.common',
+          'translations.official',
+          // 'name.common',
+          // 'name.official',
+          // 'altSpellings',
+          // 'capital',
+          // 'cities',
+        ],
+      });
+      console.log({ result });
       expect(result?.[0]).toEqual({ name: 'Cyprus', cca3: 'CYP' });
     });
   });

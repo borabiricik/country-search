@@ -8,22 +8,22 @@ const getAll = (): ConvertedCountry[] => {
   return mergedCountries;
 };
 
-const search = (q: string, options?: Options): CountryData[] | undefined => {
+const search = (q: string, options?: Options): CountryData[] => {
   try {
     if (!q) throw new Error('No query provided');
     else {
       const mergedCountries = mergeCountries(options);
       const fuse = new Fuse(mergedCountries, {
         keys: options?.keys || [
-          'name.common',
-          'name.official',
-          'altSpellings',
+          // 'name.common',
+          // 'name.official',
+          // 'altSpellings',
           // 'cities',
           'translations.official',
           'translations.common',
           // 'capital',
         ],
-        threshold: 0.2,
+        threshold: options?.threshold || 0.2,
         shouldSort: true,
         useExtendedSearch: true,
         minMatchCharLength: 3,
@@ -38,6 +38,7 @@ const search = (q: string, options?: Options): CountryData[] | undefined => {
     }
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
 
