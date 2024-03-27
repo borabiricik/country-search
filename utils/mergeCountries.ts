@@ -7,13 +7,21 @@ import { Options } from '../src/types/options';
 
 const convertTranslationsArray = (
   translations?: Country['translations'],
-  languageCodes?: Options['languageCodes']
+  languageCodes?: Options['languageCodes'],
+  currentLocale?: Options['currentLocale']
 ) => {
   if (!translations) return null;
   const convertedTranslations = Object.entries(translations).map(
     ([key, value]) => ({
       lang: key,
-      ...value,
+      common: currentLocale
+        ? value?.common?.toLocaleLowerCase(languageCodes)
+        : value?.common,
+      official: currentLocale
+        ? value?.official?.toLocaleLowerCase(languageCodes)
+        : value?.official,
+      // official: value?.official?.toLocaleLowerCase('tr'),
+      // ...value,
     })
   );
   if (!languageCodes) return convertedTranslations;
@@ -36,7 +44,8 @@ export const mergeCountries = (
     if (!nativeCountry) return null;
     const convertedTranslations = convertTranslationsArray(
       nativeCountry.translations,
-      languageCodes
+      languageCodes,
+      options?.currentLocale
     );
     return {
       ...country,

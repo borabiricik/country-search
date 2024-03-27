@@ -106,5 +106,74 @@ describe('index', () => {
       });
       expect(result?.[0]).not.toEqual({ name: 'Italy', cca3: 'ITA' });
     });
+    it('should include only turkish translations', () => {
+      const result = search('is', {
+        countryCCA3s: [
+          'TUR',
+          'FRA',
+          'DEU',
+          'GRC',
+          'ITA',
+          'ESP',
+          'GBR',
+          'USA',
+          'MEX',
+        ],
+        languageCodes: ['tur'],
+        keys: [
+          'translations.common',
+          'translations.official',
+          'name.common',
+          'name.official',
+        ],
+        minMatchCharLength: 2,
+        currentLocale: 'tur',
+      });
+      expect(result?.[0]).not.toEqual({ name: 'Italy', cca3: 'ITA' });
+    });
+
+    it('should include localed translations - italy', () => {
+      const result = search('İta', {
+        countryCCA3s: [
+          'TUR',
+          'FRA',
+          'DEU',
+          'GRC',
+          'ITA',
+          'ESP',
+          'GBR',
+          'USA',
+          'MEX',
+        ],
+        languageCodes: ['tur'],
+        keys: ['translations.common'],
+        minMatchCharLength: 2,
+        currentLocale: 'tur',
+      });
+      console.log({ result });
+      expect(result?.[0]).toEqual({ name: 'Italy', cca3: 'ITA' });
+    });
+
+    it('should include localed translations - spain', () => {
+      const result = search('İs', {
+        countryCCA3s: [
+          'TUR',
+          'FRA',
+          'DEU',
+          'GRC',
+          'ITA',
+          'ESP',
+          'GBR',
+          'USA',
+          'MEX',
+        ],
+        languageCodes: ['tur'],
+        keys: ['translations.common'],
+        minMatchCharLength: 2,
+        currentLocale: 'tur',
+      });
+      console.log({ result });
+      expect(result?.[0]).toEqual({ name: 'Spain', cca3: 'ESP' });
+    });
   });
 });
