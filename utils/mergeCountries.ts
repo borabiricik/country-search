@@ -6,16 +6,26 @@ import { Options } from '../src/types/options';
 // const nativeCountries = require('../data/nativeCountries.json');
 
 const convertTranslationsArray = (
-  translations: Country['translations'] | undefined
+  translations?: Country['translations'],
+  languageCodes?: Options['languageCodes']
 ) => {
   if (!translations) return null;
-  return Object.entries(translations).map(([key, value]) => ({
-    lang: key,
-    ...value,
-  }));
+  const convertedTranslations = Object.entries(translations).map(
+    ([key, value]) => ({
+      lang: key,
+      ...value,
+    })
+  );
+  if (!languageCodes) return convertedTranslations;
+  return convertedTranslations.filter(code =>
+    languageCodes?.includes(code.lang)
+  );
 };
 
-export const mergeCountries = (options?: Options): ConvertedCountry[] => {
+export const mergeCountries = (
+  options?: Options,
+  languageCodes?: Options['languageCodes']
+): ConvertedCountry[] => {
   const internalCountries = options?.countryCCA3s
     ? countriesWithCities.data.filter(country =>
         options.countryCCA3s?.includes(country.iso3)
@@ -24,9 +34,9 @@ export const mergeCountries = (options?: Options): ConvertedCountry[] => {
   const mergedCountries = internalCountries.map(country => {
     const nativeCountry = nativeCountries.find(nc => nc.cca3 === country.iso3);
     if (!nativeCountry) return null;
-
     const convertedTranslations = convertTranslationsArray(
-      nativeCountry.translations
+      nativeCountry.translations,
+      languageCodes
     );
     return {
       ...country,

@@ -6,6 +6,7 @@ export interface Options {
   limit?: number;
   threshold?: IFuseOptions<unknown>['threshold'];
   minMatchCharLength?: IFuseOptions<unknown>['minMatchCharLength'];
+  languageCodes?: string[];
 }
 
 type SearchKeys =

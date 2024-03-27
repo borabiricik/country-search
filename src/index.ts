@@ -12,7 +12,7 @@ const search = (q: string, options?: Options): CountryData[] => {
   try {
     if (!q) throw new Error('No query provided');
     else {
-      const mergedCountries = mergeCountries(options);
+      const mergedCountries = mergeCountries(options, options?.languageCodes);
       const fuse = new Fuse(mergedCountries, {
         keys: options?.keys || [
           // 'name.common',

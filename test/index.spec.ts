@@ -70,4 +70,41 @@ describe('index', () => {
       });
     });
   });
+
+  describe('translations search', () => {
+    it('should include only turkish translations', () => {
+      const result = search('İt', {
+        languageCodes: ['tur'],
+        keys: ['translations.common', 'translations.official'],
+        minMatchCharLength: 2,
+      });
+      expect(result?.[0]).toEqual({ name: 'Italy', cca3: 'ITA' });
+    });
+    it('should include only german translations', () => {
+      const result = search('Italienische', {
+        languageCodes: ['deu'],
+        keys: [
+          'translations.common',
+          'translations.official',
+          'name.common',
+          'name.official',
+        ],
+        minMatchCharLength: 2,
+      });
+      expect(result?.[0]).toEqual({ name: 'Italy', cca3: 'ITA' });
+    });
+    it('should not include non-languageCode given country', () => {
+      const result = search('İtalya', {
+        languageCodes: ['deu'],
+        keys: [
+          'translations.common',
+          'translations.official',
+          'name.common',
+          'name.official',
+        ],
+        minMatchCharLength: 2,
+      });
+      expect(result?.[0]).not.toEqual({ name: 'Italy', cca3: 'ITA' });
+    });
+  });
 });
