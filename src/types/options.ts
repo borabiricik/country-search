@@ -7,6 +7,14 @@ export interface Options {
   threshold?: IFuseOptions<unknown>['threshold'];
   minMatchCharLength?: IFuseOptions<unknown>['minMatchCharLength'];
   languageCodes?: string[];
+  customTranslations?: CustomTranslation[];
+}
+
+interface CustomTranslation {
+  lang: string;
+  country: string;
+  common: string;
+  official: string;
 }
 
 type SearchKeys =

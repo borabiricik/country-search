@@ -2,8 +2,6 @@ import countriesWithCities from '../data/countriesWithCities.json';
 import nativeCountries from '../data/nativeCountries.json';
 import { ConvertedCountry, Country } from '../src/types';
 import { Options } from '../src/types/options';
-// const countriesWithCities = require('../data/countriesWithCities.json');
-// const nativeCountries = require('../data/nativeCountries.json');
 
 const convertTranslationsArray = (
   translations?: Country['translations'],
@@ -15,8 +13,6 @@ const convertTranslationsArray = (
       lang: key,
       common: value?.common?.toLocaleLowerCase(languageCodes),
       official: value?.official?.toLocaleLowerCase(languageCodes),
-      // official: value?.official?.toLocaleLowerCase('tr'),
-      // ...value,
     })
   );
   if (!languageCodes) return convertedTranslations;
@@ -70,5 +66,30 @@ export const mergeCountries = (
     };
   });
 
-  return convertedCountires as ConvertedCountry[];
+  const customizedTranslations = convertedCountires.map(country => {
+    const customTranslation = options?.customTranslations?.find(
+      ct => ct.country === country.cca3
+    );
+    if (!customTranslation) return country;
+    const convertedCustomTranslation =
+      convertTranslationsArray(
+        {
+          [customTranslation.lang]: {
+            common: customTranslation.common,
+            official: customTranslation.official,
+          },
+        },
+        languageCodes
+      ) || [];
+    const translations = country.translations
+      ? [...country.translations, ...convertedCustomTranslation]
+      : [...convertedCustomTranslation];
+    return {
+      ...country,
+      translations,
+    };
+  });
+  console.log(customizedTranslations.find(c => c.cca3 === 'TUR'));
+
+  return customizedTranslations as ConvertedCountry[];
 };

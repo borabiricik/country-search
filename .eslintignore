@@ -1,3 +1,4 @@
 src/types/global.d.ts
 node_modules/
 data/
+coverage/
