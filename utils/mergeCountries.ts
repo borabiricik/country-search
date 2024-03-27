@@ -89,7 +89,6 @@ export const mergeCountries = (
       translations,
     };
   });
-  console.log(customizedTranslations.find(c => c.cca3 === 'TUR'));
 
   return customizedTranslations as ConvertedCountry[];
 };
