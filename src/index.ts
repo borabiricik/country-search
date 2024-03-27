@@ -26,7 +26,8 @@ const search = (q: string, options?: Options): CountryData[] => {
         threshold: options?.threshold || 0.2,
         shouldSort: true,
         useExtendedSearch: true,
-        minMatchCharLength: 3,
+        minMatchCharLength: options?.minMatchCharLength || 3,
+        isCaseSensitive: false,
       });
 
       const result = fuse

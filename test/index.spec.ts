@@ -27,7 +27,6 @@ describe('index', () => {
       const result = search('united st', {
         keys: ['name.common', 'name.official'],
       });
-      console.log({ result });
       expect(result?.[0]).toEqual({ name: 'United States', cca3: 'USA' });
     });
 
@@ -55,8 +54,20 @@ describe('index', () => {
           // 'cities',
         ],
       });
-      console.log({ result });
       expect(result?.[0]).toEqual({ name: 'Cyprus', cca3: 'CYP' });
+    });
+  });
+
+  describe('case insensetive search', () => {
+    describe('case insensetive search', () => {
+      it('should find italy', () => {
+        const result = search('Ita', {
+          countryCCA3s: ['ESP', 'CHN', 'ITA', 'USA'],
+          minMatchCharLength: 2,
+        });
+
+        expect(result?.[0]).toEqual({ name: 'Italy', cca3: 'ITA' });
+      });
     });
   });
 });
