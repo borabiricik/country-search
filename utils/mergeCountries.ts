@@ -29,24 +29,39 @@ export const mergeCountries = (
   options?: Options,
   languageCodes?: Options['languageCodes']
 ): ConvertedCountry[] => {
-  const internalCountries = options?.countryCCA3s
-    ? countriesWithCities.data.filter(country =>
-        options.countryCCA3s?.includes(country.iso3)
-      )
-    : countriesWithCities.data;
-  const mergedCountries = internalCountries.map(country => {
-    const nativeCountry = nativeCountries.find(nc => nc.cca3 === country.iso3);
-    if (!nativeCountry) return null;
+  if (options?.keys?.includes('cities')) {
+    const internalCountries = options?.countryCCA3s
+      ? countriesWithCities.data.filter(country =>
+          options.countryCCA3s?.includes(country.iso3)
+        )
+      : countriesWithCities.data;
+    const mergedCountries = internalCountries.map(country => {
+      const nativeCountry = nativeCountries.find(
+        nc => nc.cca3 === country.iso3
+      );
+      if (!nativeCountry) return null;
+      const convertedTranslations = convertTranslationsArray(
+        nativeCountry.translations,
+        languageCodes
+      );
+      return {
+        ...country,
+        ...nativeCountry,
+        translations: convertedTranslations,
+      };
+    });
+    return mergedCountries.filter(Boolean) as ConvertedCountry[];
+  }
+  const internalCountries = nativeCountries.map(country => {
     const convertedTranslations = convertTranslationsArray(
-      nativeCountry.translations,
+      country.translations,
       languageCodes
     );
     return {
       ...country,
-      ...nativeCountry,
+
       translations: convertedTranslations,
     };
   });
-
-  return mergedCountries.filter(Boolean) as ConvertedCountry[];
+  return internalCountries as ConvertedCountry[];
 };

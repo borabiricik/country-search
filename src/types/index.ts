@@ -30,11 +30,15 @@ export interface Country {
   postalCode: PostalCode;
   iso2: string;
   iso3: string;
-  country: string;
+  country?: string;
   cities: string[];
 }
 
-export interface ConvertedCountry extends Omit<Country, 'translations'> {
+export interface ConvertedCountry
+  extends Omit<
+    Country,
+    'translations' | 'cities' | 'iso2' | 'iso3' | 'postalCode'
+  > {
   translations: {
     lang: string;
     official: string;
