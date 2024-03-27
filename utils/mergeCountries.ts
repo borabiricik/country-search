@@ -52,7 +52,13 @@ export const mergeCountries = (
     });
     return mergedCountries.filter(Boolean) as ConvertedCountry[];
   }
-  const internalCountries = nativeCountries.map(country => {
+
+  const internalCountries = options?.countryCCA3s
+    ? nativeCountries.filter(country =>
+        options.countryCCA3s?.includes(country.cca3)
+      )
+    : nativeCountries;
+  const convertedCountires = internalCountries.map(country => {
     const convertedTranslations = convertTranslationsArray(
       country.translations,
       languageCodes
@@ -63,5 +69,6 @@ export const mergeCountries = (
       translations: convertedTranslations,
     };
   });
-  return internalCountries as ConvertedCountry[];
+
+  return convertedCountires as ConvertedCountry[];
 };
