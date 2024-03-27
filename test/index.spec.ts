@@ -127,7 +127,6 @@ describe('index', () => {
           'name.official',
         ],
         minMatchCharLength: 2,
-        currentLocale: 'tur',
       });
       expect(result?.[0]).not.toEqual({ name: 'Italy', cca3: 'ITA' });
     });
@@ -148,7 +147,6 @@ describe('index', () => {
         languageCodes: ['tur'],
         keys: ['translations.common'],
         minMatchCharLength: 2,
-        currentLocale: 'tur',
       });
       console.log({ result });
       expect(result?.[0]).toEqual({ name: 'Italy', cca3: 'ITA' });
@@ -170,7 +168,6 @@ describe('index', () => {
         languageCodes: ['tur'],
         keys: ['translations.common'],
         minMatchCharLength: 2,
-        currentLocale: 'tur',
       });
       console.log({ result });
       expect(result?.[0]).toEqual({ name: 'Spain', cca3: 'ESP' });

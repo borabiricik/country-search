@@ -31,7 +31,7 @@ const search = (q: string, options?: Options): CountryData[] => {
       });
 
       const result = fuse
-        .search(q.replace(' ', '').toLocaleLowerCase(options?.currentLocale), {
+        .search(q.replace(' ', '').toLocaleLowerCase(options?.languageCodes), {
           limit: options?.limit || 5,
         })
         .map(({ item }) => {
